@@ -96,9 +96,9 @@ class Stg_CCI : public Strategy {
     }
     // Initialize strategy parameters.
     ChartParams cparams(_tf);
-    CCI_Params adx_params(_params.CCI_Period, _params.CCI_Applied_Price);
-    IndicatorParams adx_iparams(10, INDI_CCI);
-    StgParams sparams(new Trade(_tf, _Symbol), new Indi_CCI(adx_params, adx_iparams, cparams), NULL, NULL);
+    CCI_Params cci_params(_params.CCI_Period, _params.CCI_Applied_Price);
+    IndicatorParams cci_iparams(10, INDI_CCI);
+    StgParams sparams(new Trade(_tf, _Symbol), new Indi_CCI(cci_params, cci_iparams, cparams), NULL, NULL);
     sparams.logger.SetLevel(_log_level);
     sparams.SetMagicNo(_magic_no);
     sparams.SetSignals(_params.CCI_SignalOpenMethod, _params.CCI_SignalOpenLevel, _params.CCI_SignalCloseMethod,
@@ -116,34 +116,32 @@ class Stg_CCI : public Strategy {
    *   _cmd (int) - type of trade order command
    *   period (int) - period to check for
    *   _method (int) - signal method to use by using bitwise AND operation
-   *   _level1 (double) - signal level to consider the signal
+   *   _level (double) - signal level to consider the signal
    */
   bool SignalOpen(ENUM_ORDER_TYPE _cmd, int _method = 0, double _level = 0.0) {
     bool _result = false;
     double cci_0 = ((Indi_CCI *)this.Data()).GetValue(0);
     double cci_1 = ((Indi_CCI *)this.Data()).GetValue(1);
     double cci_2 = ((Indi_CCI *)this.Data()).GetValue(2);
-    if (_level1 == EMPTY) _level1 = GetSignalLevel1();
-    if (_level2 == EMPTY) _level2 = GetSignalLevel2();
     switch (_cmd) {
       case ORDER_TYPE_BUY:
-        _result = cci_0 > 0 && cci_0 < -_level1;
+        _result = cci_0 > 0 && cci_0 < -_level;
         if (_method != 0) {
           if (METHOD(_method, 0)) _result &= cci_0 > cci_1;
           if (METHOD(_method, 1)) _result &= cci_1 > cci_2;
-          if (METHOD(_method, 2)) _result &= cci_1 < -_level1;
-          if (METHOD(_method, 3)) _result &= cci_2 < -_level1;
+          if (METHOD(_method, 2)) _result &= cci_1 < -_level;
+          if (METHOD(_method, 3)) _result &= cci_2 < -_level;
           if (METHOD(_method, 4)) _result &= cci_0 - cci_1 > cci_1 - cci_2;
           if (METHOD(_method, 5)) _result &= cci_2 > 0;
         }
         break;
       case ORDER_TYPE_SELL:
-        _result = cci_0 > 0 && cci_0 > _level1;
+        _result = cci_0 > 0 && cci_0 > _level;
         if (_method != 0) {
           if (METHOD(_method, 0)) _result &= cci_0 < cci_1;
           if (METHOD(_method, 1)) _result &= cci_1 < cci_2;
-          if (METHOD(_method, 2)) _result &= cci_1 > _level1;
-          if (METHOD(_method, 3)) _result &= cci_2 > _level1;
+          if (METHOD(_method, 2)) _result &= cci_1 > _level;
+          if (METHOD(_method, 3)) _result &= cci_2 > _level;
           if (METHOD(_method, 4)) _result &= cci_1 - cci_0 > cci_2 - cci_1;
           if (METHOD(_method, 5)) _result &= cci_2 < 0;
         }

@@ -12,15 +12,12 @@ struct Stg_CCI_EURUSD_H1_Params : Stg_CCI_Params {
     CCI_Period = 2;
     CCI_Applied_Price = 3;
     CCI_Shift = 0;
-    CCI_TrailingStopMethod = 6;
-    CCI_TrailingProfitMethod = 11;
+    CCI_SignalOpenMethod = 0;
     CCI_SignalOpenLevel = 36;
-    CCI_SignalBaseMethod = 0;
-    CCI_SignalOpenMethod1 = 195;
-    CCI_SignalOpenMethod2 = 0;
+    CCI_SignalCloseMethod = 1;
     CCI_SignalCloseLevel = 36;
-    CCI_SignalCloseMethod1 = 1;
-    CCI_SignalCloseMethod2 = 0;
+    CCI_PriceLimitMethod = 0;
+    CCI_PriceLimitLevel = 0;
     CCI_MaxSpread = 6;
   }
 };

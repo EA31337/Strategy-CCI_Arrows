@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                  EA31337 - multi-strategy advanced trading robot |
-//|                       Copyright 2016-2019, 31337 Investments Ltd |
+//|                       Copyright 2016-2020, 31337 Investments Ltd |
 //|                                       https://github.com/EA31337 |
 //+------------------------------------------------------------------+
 
@@ -20,6 +20,8 @@ INPUT int CCI_Period = 58;                                      // Period
 INPUT ENUM_APPLIED_PRICE CCI_Applied_Price = 2;                 // Applied Price
 INPUT int CCI_SignalOpenMethod = 0;                             // Signal open method (-63-63)
 INPUT double CCI_SignalOpenLevel = 18;                          // Signal open level (-49-49)
+INPUT int CCI_SignalOpenFilterMethod = 0;                       // Signal open filter method
+INPUT int CCI_SignalOpenBoostMethod = 0;                        // Signal open boost method
 INPUT int CCI_SignalCloseMethod = 0;                            // Signal close method (-63-63)
 INPUT double CCI_SignalCloseLevel = 18;                         // Signal close level (-49-49)
 INPUT int CCI_PriceLimitMethod = 0;                             // Price limit method (0-6)
@@ -33,6 +35,8 @@ struct Stg_CCI_Params : Stg_Params {
   int CCI_Shift;
   int CCI_SignalOpenMethod;
   double CCI_SignalOpenLevel;
+  int CCI_SignalOpenFilterMethod;
+  int CCI_SignalOpenBoostMethod;
   int CCI_SignalCloseMethod;
   double CCI_SignalCloseLevel;
   int CCI_PriceLimitMethod;
@@ -46,6 +50,8 @@ struct Stg_CCI_Params : Stg_Params {
         CCI_Shift(::CCI_Shift),
         CCI_SignalOpenMethod(::CCI_SignalOpenMethod),
         CCI_SignalOpenLevel(::CCI_SignalOpenLevel),
+        CCI_SignalOpenFilterMethod(::CCI_SignalOpenFilterMethod),
+        CCI_SignalOpenBoostMethod(::CCI_SignalOpenBoostMethod),
         CCI_SignalCloseMethod(::CCI_SignalCloseMethod),
         CCI_SignalCloseLevel(::CCI_SignalCloseLevel),
         CCI_PriceLimitMethod(::CCI_PriceLimitMethod),
@@ -101,8 +107,8 @@ class Stg_CCI : public Strategy {
     StgParams sparams(new Trade(_tf, _Symbol), new Indi_CCI(cci_params, cci_iparams, cparams), NULL, NULL);
     sparams.logger.SetLevel(_log_level);
     sparams.SetMagicNo(_magic_no);
-    sparams.SetSignals(_params.CCI_SignalOpenMethod, _params.CCI_SignalOpenLevel, _params.CCI_SignalCloseMethod,
-                       _params.CCI_SignalCloseLevel);
+    sparams.SetSignals(_params.CCI_SignalOpenMethod, _params.CCI_SignalOpenLevel, _params.CCI_SignalOpenFilterMethod,
+                       _params.CCI_SignalOpenBoostMethod, _params.CCI_SignalCloseMethod, _params.CCI_SignalCloseLevel);
     sparams.SetMaxSpread(_params.CCI_MaxSpread);
     // Initialize strategy instance.
     Strategy *_strat = new Stg_CCI(sparams, "CCI");
@@ -151,6 +157,38 @@ class Stg_CCI : public Strategy {
   }
 
   /**
+   * Check strategy's opening signal additional filter.
+   */
+  bool SignalOpenFilter(ENUM_ORDER_TYPE _cmd, int _method = 0) {
+    bool _result = true;
+    if (_method != 0) {
+      // if (METHOD(_method, 0)) _result &= Trade().IsTrend(_cmd);
+      // if (METHOD(_method, 1)) _result &= Trade().IsPivot(_cmd);
+      // if (METHOD(_method, 2)) _result &= Trade().IsPeakHours(_cmd);
+      // if (METHOD(_method, 3)) _result &= Trade().IsRoundNumber(_cmd);
+      // if (METHOD(_method, 4)) _result &= Trade().IsHedging(_cmd);
+      // if (METHOD(_method, 5)) _result &= Trade().IsPeakBar(_cmd);
+    }
+    return _result;
+  }
+
+  /**
+   * Gets strategy's lot size boost (when enabled).
+   */
+  double SignalOpenBoost(ENUM_ORDER_TYPE _cmd, int _method = 0) {
+    bool _result = 1.0;
+    if (_method != 0) {
+      // if (METHOD(_method, 0)) if (Trade().IsTrend(_cmd)) _result *= 1.1;
+      // if (METHOD(_method, 1)) if (Trade().IsPivot(_cmd)) _result *= 1.1;
+      // if (METHOD(_method, 2)) if (Trade().IsPeakHours(_cmd)) _result *= 1.1;
+      // if (METHOD(_method, 3)) if (Trade().IsRoundNumber(_cmd)) _result *= 1.1;
+      // if (METHOD(_method, 4)) if (Trade().IsHedging(_cmd)) _result *= 1.1;
+      // if (METHOD(_method, 5)) if (Trade().IsPeakBar(_cmd)) _result *= 1.1;
+    }
+    return _result;
+  }
+
+  /**
    * Check strategy's closing signal.
    */
   bool SignalClose(ENUM_ORDER_TYPE _cmd, int _method = 0, double _level = 0.0) {
@@ -160,9 +198,9 @@ class Stg_CCI : public Strategy {
   /**
    * Gets price limit value for profit take or stop loss.
    */
-  double PriceLimit(ENUM_ORDER_TYPE _cmd, ENUM_STG_PRICE_LIMIT_MODE _mode, int _method = 0, double _level = 0.0) {
+  double PriceLimit(ENUM_ORDER_TYPE _cmd, ENUM_ORDER_TYPE_VALUE _mode, int _method = 0, double _level = 0.0) {
     double _trail = _level * Market().GetPipSize();
-    int _direction = Order::OrderDirection(_cmd) * (_mode == LIMIT_VALUE_STOP ? -1 : 1);
+    int _direction = Order::OrderDirection(_cmd) * (_mode == ORDER_TYPE_SL ? -1 : 1);
     double _default_value = Market().GetCloseOffer(_cmd) + _trail * _method * _direction;
     double _result = _default_value;
     switch (_method) {

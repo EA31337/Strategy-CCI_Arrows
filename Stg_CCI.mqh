@@ -102,31 +102,36 @@ class Stg_CCI : public Strategy {
    *   _level (double) - signal level to consider the signal
    */
   bool SignalOpen(ENUM_ORDER_TYPE _cmd, int _method = 0, double _level = 0.0) {
-    bool _result = false;
-    double cci_0 = ((Indi_CCI *)this.Data()).GetValue(0);
-    double cci_1 = ((Indi_CCI *)this.Data()).GetValue(1);
-    double cci_2 = ((Indi_CCI *)this.Data()).GetValue(2);
+    Chart *_chart = Chart();
+    Indicator *_indi = Data();
+    bool _is_valid = _indi[CURR].IsValid() && _indi[PREV].IsValid() && _indi[PPREV].IsValid();
+    bool _result = _is_valid;
+    if (!_result) {
+      // Returns false when indicator data is not valid.
+      return false;
+    }
+    double level = _level * Chart().GetPipSize();
     switch (_cmd) {
       case ORDER_TYPE_BUY:
-        _result = cci_0 > 0 && cci_0 < -_level;
+        _result = _indi[CURR].value[0] > 0 && _indi[CURR].value[0] < -_level;
         if (_method != 0) {
-          if (METHOD(_method, 0)) _result &= cci_0 > cci_1;
-          if (METHOD(_method, 1)) _result &= cci_1 > cci_2;
-          if (METHOD(_method, 2)) _result &= cci_1 < -_level;
-          if (METHOD(_method, 3)) _result &= cci_2 < -_level;
-          if (METHOD(_method, 4)) _result &= cci_0 - cci_1 > cci_1 - cci_2;
-          if (METHOD(_method, 5)) _result &= cci_2 > 0;
+          if (METHOD(_method, 0)) _result &= _indi[CURR].value[0] > _indi[PREV].value[0];
+          if (METHOD(_method, 1)) _result &= _indi[PREV].value[0] > _indi[PPREV].value[0];
+          if (METHOD(_method, 2)) _result &= _indi[PREV].value[0] < -_level;
+          if (METHOD(_method, 3)) _result &= _indi[PPREV].value[0] < -_level;
+          if (METHOD(_method, 4)) _result &= _indi[CURR].value[0] - _indi[PREV].value[0] > _indi[PREV].value[0] - _indi[PPREV].value[0];
+          if (METHOD(_method, 5)) _result &= _indi[PPREV].value[0] > 0;
         }
         break;
       case ORDER_TYPE_SELL:
-        _result = cci_0 > 0 && cci_0 > _level;
+        _result = _indi[CURR].value[0] > 0 && _indi[CURR].value[0] > _level;
         if (_method != 0) {
-          if (METHOD(_method, 0)) _result &= cci_0 < cci_1;
-          if (METHOD(_method, 1)) _result &= cci_1 < cci_2;
-          if (METHOD(_method, 2)) _result &= cci_1 > _level;
-          if (METHOD(_method, 3)) _result &= cci_2 > _level;
-          if (METHOD(_method, 4)) _result &= cci_1 - cci_0 > cci_2 - cci_1;
-          if (METHOD(_method, 5)) _result &= cci_2 < 0;
+          if (METHOD(_method, 0)) _result &= _indi[CURR].value[0] < _indi[PREV].value[0];
+          if (METHOD(_method, 1)) _result &= _indi[PREV].value[0] < _indi[PPREV].value[0];
+          if (METHOD(_method, 2)) _result &= _indi[PREV].value[0] > _level;
+          if (METHOD(_method, 3)) _result &= _indi[PPREV].value[0] > _level;
+          if (METHOD(_method, 4)) _result &= _indi[PREV].value[0] - _indi[CURR].value[0] > _indi[PPREV].value[0] - _indi[PREV].value[0];
+          if (METHOD(_method, 5)) _result &= _indi[PPREV].value[0] < 0;
         }
         break;
     }
@@ -177,7 +182,7 @@ class Stg_CCI : public Strategy {
    */
   double PriceLimit(ENUM_ORDER_TYPE _cmd, ENUM_ORDER_TYPE_VALUE _mode, int _method = 0, double _level = 0.0) {
     double _trail = _level * Market().GetPipSize();
-    int _direction = Order::OrderDirection(_cmd) * (_mode == ORDER_TYPE_SL ? -1 : 1);
+    int _direction = Order::OrderDirection(_cmd, _mode);
     double _default_value = Market().GetCloseOffer(_cmd) + _trail * _method * _direction;
     double _result = _default_value;
     switch (_method) {

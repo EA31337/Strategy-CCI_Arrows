@@ -86,6 +86,7 @@ class Stg_CCI : public Strategy {
     sparams.SetMagicNo(_magic_no);
     sparams.SetSignals(_params.CCI_SignalOpenMethod, _params.CCI_SignalOpenLevel, _params.CCI_SignalOpenFilterMethod,
                        _params.CCI_SignalOpenBoostMethod, _params.CCI_SignalCloseMethod, _params.CCI_SignalCloseLevel);
+    sparams.SetPriceLimits(_params.CCI_PriceLimitMethod, _params.CCI_PriceLimitLevel);
     sparams.SetMaxSpread(_params.CCI_MaxSpread);
     // Initialize strategy instance.
     Strategy *_strat = new Stg_CCI(sparams, "CCI");

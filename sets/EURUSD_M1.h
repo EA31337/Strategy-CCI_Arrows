@@ -15,7 +15,7 @@ struct Stg_CCI_EURUSD_M1_Params : Stg_CCI_Params {
     CCI_SignalCloseMethod = 0;
     CCI_SignalCloseLevel = 36;
     CCI_PriceLimitMethod = 0;
-    CCI_PriceLimitLevel = 0;
+    CCI_PriceLimitLevel = 2;
     CCI_MaxSpread = 2;
   }
 } stg_cci_m1;

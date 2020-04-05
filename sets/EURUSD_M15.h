@@ -7,7 +7,7 @@
 // Defines strategy's parameter values for the given pair symbol and timeframe.
 struct Stg_CCI_EURUSD_M15_Params : Stg_CCI_Params {
   Stg_CCI_EURUSD_M15_Params() {
-    CCI_Period = 2;
+    CCI_Period = 12;
     CCI_Applied_Price = 3;
     CCI_Shift = 0;
     CCI_SignalOpenMethod = -63;
@@ -15,7 +15,7 @@ struct Stg_CCI_EURUSD_M15_Params : Stg_CCI_Params {
     CCI_SignalCloseMethod = 1;
     CCI_SignalCloseLevel = 36;
     CCI_PriceLimitMethod = 0;
-    CCI_PriceLimitLevel = 0;
+    CCI_PriceLimitLevel = 2;
     CCI_MaxSpread = 4;
   }
 } stg_cci_m15;

@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                  EA31337 - multi-strategy advanced trading robot |
-//|                       Copyright 2016-2020, 31337 Investments Ltd |
+//|                                      Copyright 2016-2020, kenorb |
 //|                                       https://github.com/EA31337 |
 //+------------------------------------------------------------------+
 
@@ -24,8 +24,7 @@ input bool Info_On_Chart = true;          // Display info on chart.
 #define ea_name "Stg_CCIA"
 #define ea_version "1.000"
 #define ea_desc "Multi-strategy advanced trading robot"
-#define ea_link "https://github.com/EA31337/Strategy-CCI"
-#define ea_author "kenorb"
+#define ea_link "https://github.com/EA31337/Strategy-CCIA"
 
 // Properties.
 #property version ea_version
@@ -34,7 +33,6 @@ input bool Info_On_Chart = true;          // Display info on chart.
 #property description ea_desc
 #endif
 #property link ea_link
-#property copyright "Copyright 2016-2020, 31337 Investments Ltd"
 
 // Class variables.
 EA *ea;

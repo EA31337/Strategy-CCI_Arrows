@@ -18,10 +18,10 @@ input ENUM_LOG_LEVEL Log_Level = V_INFO;  // Log level.
 input bool Info_On_Chart = true;          // Display info on chart.
 
 // Includes strategy.
-#include "Stg_CCI.mqh"
+#include "Stg_CCIA.mqh"
 
 // Defines.
-#define ea_name "Stg_CCI"
+#define ea_name "Stg_CCIA"
 #define ea_version "1.000"
 #define ea_desc "Multi-strategy advanced trading robot"
 #define ea_link "https://github.com/EA31337/Strategy-CCI"
@@ -51,7 +51,7 @@ int OnInit() {
   EAParams ea_params(__FILE__, Log_Level);
   ea_params.SetChartInfoFreq(Info_On_Chart ? 2 : 0);
   ea = new EA(ea_params);
-  _result &= ea.StrategyAdd<Stg_CCI>(Active_Tfs);
+  _result &= ea.StrategyAdd<Stg_CCIA>(Active_Tfs);
   return (_result ? INIT_SUCCEEDED : INIT_FAILED);
 }
 

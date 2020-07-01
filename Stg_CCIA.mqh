@@ -14,49 +14,49 @@
 #include <EA31337-classes/Strategy.mqh>
 
 // User input params.
-INPUT string __CCI_Parameters__ = "-- CCI strategy params --";  // >>> CCI <<<
-INPUT int CCI_Shift = 1;                                        // Shift (0 for default)
-INPUT int CCI_Period = 58;                                      // Period
-INPUT ENUM_APPLIED_PRICE CCI_Applied_Price = 2;                 // Applied Price
-INPUT int CCI_SignalOpenMethod = 0;                             // Signal open method (-63-63)
-INPUT double CCI_SignalOpenLevel = 18;                          // Signal open level (-49-49)
-INPUT int CCI_SignalOpenFilterMethod = 0;                       // Signal open filter method
-INPUT int CCI_SignalOpenBoostMethod = 0;                        // Signal open boost method
-INPUT int CCI_SignalCloseMethod = 0;                            // Signal close method (-63-63)
-INPUT double CCI_SignalCloseLevel = 18;                         // Signal close level (-49-49)
-INPUT int CCI_PriceLimitMethod = 0;                             // Price limit method (0-6)
-INPUT double CCI_PriceLimitLevel = 0;                           // Price limit level
-double CCI_MaxSpread = 6.0;                                     // Max spread to trade (pips)
+INPUT string __CCIA_Parameters__ = "-- CCI strategy params --";  // >>> CCI <<<
+INPUT int CCIA_Shift = 1;                                        // Shift (0 for default)
+INPUT int CCIA_Period = 58;                                      // Period
+INPUT ENUM_APPLIED_PRICE CCIA_Applied_Price = 2;                 // Applied Price
+INPUT int CCIA_SignalOpenMethod = 0;                             // Signal open method (-63-63)
+INPUT double CCIA_SignalOpenLevel = 18;                          // Signal open level (-49-49)
+INPUT int CCIA_SignalOpenFilterMethod = 0;                       // Signal open filter method
+INPUT int CCIA_SignalOpenBoostMethod = 0;                        // Signal open boost method
+INPUT int CCIA_SignalCloseMethod = 0;                            // Signal close method (-63-63)
+INPUT double CCIA_SignalCloseLevel = 18;                         // Signal close level (-49-49)
+INPUT int CCIA_PriceLimitMethod = 0;                             // Price limit method (0-6)
+INPUT double CCIA_PriceLimitLevel = 0;                           // Price limit level
+double CCIA_MaxSpread = 6.0;                                     // Max spread to trade (pips)
 
 // Struct to define strategy parameters to override.
-struct Stg_CCI_Params : StgParams {
-  unsigned int CCI_Period;
-  ENUM_APPLIED_PRICE CCI_Applied_Price;
-  int CCI_Shift;
-  int CCI_SignalOpenMethod;
-  double CCI_SignalOpenLevel;
-  int CCI_SignalOpenFilterMethod;
-  int CCI_SignalOpenBoostMethod;
-  int CCI_SignalCloseMethod;
-  double CCI_SignalCloseLevel;
-  int CCI_PriceLimitMethod;
-  double CCI_PriceLimitLevel;
-  double CCI_MaxSpread;
+struct Stg_CCIA_Params : StgParams {
+  unsigned int CCIA_Period;
+  ENUM_APPLIED_PRICE CCIA_Applied_Price;
+  int CCIA_Shift;
+  int CCIA_SignalOpenMethod;
+  double CCIA_SignalOpenLevel;
+  int CCIA_SignalOpenFilterMethod;
+  int CCIA_SignalOpenBoostMethod;
+  int CCIA_SignalCloseMethod;
+  double CCIA_SignalCloseLevel;
+  int CCIA_PriceLimitMethod;
+  double CCIA_PriceLimitLevel;
+  double CCIA_MaxSpread;
 
   // Constructor: Set default param values.
-  Stg_CCI_Params()
-      : CCI_Period(::CCI_Period),
-        CCI_Applied_Price(::CCI_Applied_Price),
-        CCI_Shift(::CCI_Shift),
-        CCI_SignalOpenMethod(::CCI_SignalOpenMethod),
-        CCI_SignalOpenLevel(::CCI_SignalOpenLevel),
-        CCI_SignalOpenFilterMethod(::CCI_SignalOpenFilterMethod),
-        CCI_SignalOpenBoostMethod(::CCI_SignalOpenBoostMethod),
-        CCI_SignalCloseMethod(::CCI_SignalCloseMethod),
-        CCI_SignalCloseLevel(::CCI_SignalCloseLevel),
-        CCI_PriceLimitMethod(::CCI_PriceLimitMethod),
-        CCI_PriceLimitLevel(::CCI_PriceLimitLevel),
-        CCI_MaxSpread(::CCI_MaxSpread) {}
+  Stg_CCIA_Params()
+      : CCIA_Period(::CCIA_Period),
+        CCIA_Applied_Price(::CCIA_Applied_Price),
+        CCIA_Shift(::CCIA_Shift),
+        CCIA_SignalOpenMethod(::CCIA_SignalOpenMethod),
+        CCIA_SignalOpenLevel(::CCIA_SignalOpenLevel),
+        CCIA_SignalOpenFilterMethod(::CCIA_SignalOpenFilterMethod),
+        CCIA_SignalOpenBoostMethod(::CCIA_SignalOpenBoostMethod),
+        CCIA_SignalCloseMethod(::CCIA_SignalCloseMethod),
+        CCIA_SignalCloseLevel(::CCIA_SignalCloseLevel),
+        CCIA_PriceLimitMethod(::CCIA_PriceLimitMethod),
+        CCIA_PriceLimitLevel(::CCIA_PriceLimitLevel),
+        CCIA_MaxSpread(::CCIA_MaxSpread) {}
 };
 
 // Loads pair specific param values.
@@ -67,29 +67,29 @@ struct Stg_CCI_Params : StgParams {
 #include "sets/EURUSD_M30.h"
 #include "sets/EURUSD_M5.h"
 
-class Stg_CCI : public Strategy {
+class Stg_CCIA : public Strategy {
  public:
-  Stg_CCI(StgParams &_params, string _name) : Strategy(_params, _name) {}
+  Stg_CCIA(StgParams &_params, string _name) : Strategy(_params, _name) {}
 
-  static Stg_CCI *Init(ENUM_TIMEFRAMES _tf = NULL, long _magic_no = NULL, ENUM_LOG_LEVEL _log_level = V_INFO) {
+  static Stg_CCIA *Init(ENUM_TIMEFRAMES _tf = NULL, long _magic_no = NULL, ENUM_LOG_LEVEL _log_level = V_INFO) {
     // Initialize strategy initial values.
-    Stg_CCI_Params _params;
+    Stg_CCIA_Params _params;
     if (!Terminal::IsOptimization()) {
-      SetParamsByTf<Stg_CCI_Params>(_params, _tf, stg_cci_m1, stg_cci_m5, stg_cci_m15, stg_cci_m30, stg_cci_h1,
+      SetParamsByTf<Stg_CCIA_Params>(_params, _tf, stg_cci_m1, stg_cci_m5, stg_cci_m15, stg_cci_m30, stg_cci_h1,
                                     stg_cci_h4, stg_cci_h4);
     }
     // Initialize strategy parameters.
-    CCIParams cci_params(_params.CCI_Period, _params.CCI_Applied_Price);
+    CCIParams cci_params(_params.CCIA_Period, _params.CCIA_Applied_Price);
     cci_params.SetTf(_tf);
     StgParams sparams(new Trade(_tf, _Symbol), new Indi_CCI(cci_params), NULL, NULL);
     sparams.logger.SetLevel(_log_level);
     sparams.SetMagicNo(_magic_no);
-    sparams.SetSignals(_params.CCI_SignalOpenMethod, _params.CCI_SignalOpenLevel, _params.CCI_SignalOpenFilterMethod,
-                       _params.CCI_SignalOpenBoostMethod, _params.CCI_SignalCloseMethod, _params.CCI_SignalCloseLevel);
-    sparams.SetPriceLimits(_params.CCI_PriceLimitMethod, _params.CCI_PriceLimitLevel);
-    sparams.SetMaxSpread(_params.CCI_MaxSpread);
+    sparams.SetSignals(_params.CCIA_SignalOpenMethod, _params.CCIA_SignalOpenLevel, _params.CCIA_SignalOpenFilterMethod,
+                       _params.CCIA_SignalOpenBoostMethod, _params.CCIA_SignalCloseMethod, _params.CCIA_SignalCloseLevel);
+    sparams.SetPriceLimits(_params.CCIA_PriceLimitMethod, _params.CCIA_PriceLimitLevel);
+    sparams.SetMaxSpread(_params.CCIA_MaxSpread);
     // Initialize strategy instance.
-    Strategy *_strat = new Stg_CCI(sparams, "CCI");
+    Strategy *_strat = new Stg_CCIA(sparams, "CCI");
     return _strat;
   }
 

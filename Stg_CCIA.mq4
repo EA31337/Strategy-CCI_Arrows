@@ -10,4 +10,4 @@
  */
 
 // Includes the main code.
-#include "Stg_CCI.mq5"
+#include "Stg_CCIA.mq5"

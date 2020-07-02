@@ -1,0 +1,26 @@
+---
+name: Compile
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+    paths:
+      - '**.mq?'
+      - '.github/workflows/compile.yml'
+  push:
+    paths:
+      - '**.mq?'
+      - '.github/workflows/compile.yml'
+
+jobs:
+  Compile:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+          repository: EA31337/EA31337-classes
+      - uses: fx31337/mql-compile-action@master
+        with:
+          path: .
+          verbose: true

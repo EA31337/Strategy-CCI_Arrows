@@ -1,2 +1,3 @@
-# Strategy-CCI
-Strategy based on the Commodity Channel Index indicator.
+# Strategy CCI Arrows
+
+Strategy based on the Commodity Channel Index Arrows indicator.

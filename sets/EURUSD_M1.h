@@ -5,17 +5,17 @@
 //+------------------------------------------------------------------+
 
 // Defines strategy's parameter values for the given pair symbol and timeframe.
-struct Stg_CCIA_EURUSD_M1_Params : Stg_CCIA_Params {
-  Stg_CCIA_EURUSD_M1_Params() {
-    CCIA_Period = 32;
-    CCIA_Applied_Price = 3;
-    CCIA_Shift = 0;
-    CCIA_SignalOpenMethod = 0;
-    CCIA_SignalOpenLevel = 36;
-    CCIA_SignalCloseMethod = 0;
-    CCIA_SignalCloseLevel = 36;
-    CCIA_PriceLimitMethod = 0;
-    CCIA_PriceLimitLevel = 2;
-    CCIA_MaxSpread = 2;
+struct Stg_CCI_Arrows_EURUSD_M1_Params : Stg_CCI_Arrows_Params {
+  Stg_CCI_Arrows_EURUSD_M1_Params() {
+    CCI_Arrows_Period = 32;
+    CCI_Arrows_Applied_Price = 3;
+    CCI_Arrows_Shift = 0;
+    CCI_Arrows_SignalOpenMethod = 0;
+    CCI_Arrows_SignalOpenLevel = 36;
+    CCI_Arrows_SignalCloseMethod = 0;
+    CCI_Arrows_SignalCloseLevel = 36;
+    CCI_Arrows_PriceLimitMethod = 0;
+    CCI_Arrows_PriceLimitLevel = 2;
+    CCI_Arrows_MaxSpread = 2;
   }
 } stg_cci_m1;

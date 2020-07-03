@@ -6,11 +6,12 @@
 
 /**
  * @file
- * Implements CCI strategy.
+ * Strategy based on the Commodity Channel Index Arrows indicator (CCI Arrows).
  */
 
 // Includes EA31337 framework.
 #include <EA31337-classes/EA.mqh>
+#include <EA31337-classes/Indicators/Indi_CCI.mqh>
 
 // Inputs.
 input int Active_Tfs = 127;               // Activated timeframes (1-255) [M1=1,M5=2,M15=4,M30=8,H1=16,H2=32,H4=64...]
@@ -18,13 +19,13 @@ input ENUM_LOG_LEVEL Log_Level = V_INFO;  // Log level.
 input bool Info_On_Chart = true;          // Display info on chart.
 
 // Includes strategy.
-#include "Stg_CCIA.mqh"
+#include "Stg_CCI_Arrows.mqh"
 
 // Defines.
-#define ea_name "Stg_CCIA"
+#define ea_name "Stg_CCI_Arrows"
 #define ea_version "1.000"
 #define ea_desc "Multi-strategy advanced trading robot"
-#define ea_link "https://github.com/EA31337/Strategy-CCIA"
+#define ea_link "https://github.com/EA31337/Strategy-CCI_Arrows"
 
 // Properties.
 #property version ea_version
@@ -49,7 +50,7 @@ int OnInit() {
   EAParams ea_params(__FILE__, Log_Level);
   ea_params.SetChartInfoFreq(Info_On_Chart ? 2 : 0);
   ea = new EA(ea_params);
-  _result &= ea.StrategyAdd<Stg_CCIA>(Active_Tfs);
+  _result &= ea.StrategyAdd<Stg_CCI_Arrows>(Active_Tfs);
   return (_result ? INIT_SUCCEEDED : INIT_FAILED);
 }
 

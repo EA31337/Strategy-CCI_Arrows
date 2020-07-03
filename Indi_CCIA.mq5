@@ -1,3 +1,11 @@
+/**
+ * @file
+ * Implements Commodity Channel Index Arrays (CCI Arrays) indicator.
+ */
+
+// Includes.
+#include <EA31337-classes/Indicators/Indi_CCI.mqh>
+
 #property copyright ""
 #property link ""
 #property version "1.00"
@@ -45,8 +53,10 @@ int OnCalculate(const int rates_total, const int prev_calculated, const datetime
   ArraySetAsSeries(Low, true);
 
   double CCIBuffer[];
-  int myCCI = iCCI(NULL, 0, CCI_Period, PRICE_CLOSE);
+  // Or make the dynamic call?
+  int myCCI = Indi_CCI::iCCI(NULL, 0, CCI_Period, PRICE_CLOSE);
   CopyBuffer(myCCI, 0, 0, rates_total, CCIBuffer);
+  //Indicator::CopyBuffer?
 
   for (int i = rates_total; i > 1; i--) {
     dUpCCIBuffer[rates_total - i + 1] = 0;

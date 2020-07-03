@@ -5,11 +5,11 @@ name: Compile
 on:
   pull_request:
     paths:
-      - '**.mq?'
+      - '**.mq[45h]'
       - '.github/workflows/compile.yml'
   push:
     paths:
-      - '**.mq?'
+      - '**.mq[45h]'
       - '.github/workflows/compile.yml'
 
 jobs:

@@ -6,7 +6,7 @@
 
 /**
  * @file
- * Implements CCI strategy.
+ * Strategy based on the Commodity Channel Index Arrows indicator (CCI Arrows).
  */
 
 // Includes EA31337 framework.

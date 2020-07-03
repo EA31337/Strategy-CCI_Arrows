@@ -24,10 +24,12 @@ jobs:
       - name: Compiles (MQL4)
         uses: fx31337/mql-compile-action@master
         with:
+          mt-version: 5.0.0.2361
           path: Stg_CCI_Arrows.mq4
           verbose: true
       - name: Compiles (MQL5)
         uses: fx31337/mql-compile-action@master
         with:
+          mt-version: 5.0.0.2515
           path: Stg_CCI_Arrows.mq5
           verbose: true

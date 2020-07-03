@@ -54,9 +54,8 @@ int OnCalculate(const int rates_total, const int prev_calculated, const datetime
 
   double CCIBuffer[];
   // Or make the dynamic call?
-  int myCCI = Indi_CCI::iCCI(NULL, 0, CCI_Period, PRICE_CLOSE);
+  int myCCI = ::iCCI(NULL, 0, CCI_Period, PRICE_CLOSE);
   CopyBuffer(myCCI, 0, 0, rates_total, CCIBuffer);
-  //Indicator::CopyBuffer?
 
   for (int i = rates_total; i > 1; i--) {
     dUpCCIBuffer[rates_total - i + 1] = 0;

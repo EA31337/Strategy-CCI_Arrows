@@ -10,7 +10,6 @@
  */
 
 // Includes.
-#include "Indi_CCI_Arrows.mqh"
 #include <EA31337-classes/Strategy.mqh>
 
 // User input params.
@@ -115,25 +114,9 @@ class Stg_CCI_Arrows : public Strategy {
     switch (_cmd) {
       case ORDER_TYPE_BUY:
         _result = _indi[CURR].value[0] > 0 && _indi[CURR].value[0] < -_level;
-        if (_method != 0) {
-          if (METHOD(_method, 0)) _result &= _indi[CURR].value[0] > _indi[PREV].value[0];
-          if (METHOD(_method, 1)) _result &= _indi[PREV].value[0] > _indi[PPREV].value[0];
-          if (METHOD(_method, 2)) _result &= _indi[PREV].value[0] < -_level;
-          if (METHOD(_method, 3)) _result &= _indi[PPREV].value[0] < -_level;
-          if (METHOD(_method, 4)) _result &= _indi[CURR].value[0] - _indi[PREV].value[0] > _indi[PREV].value[0] - _indi[PPREV].value[0];
-          if (METHOD(_method, 5)) _result &= _indi[PPREV].value[0] > 0;
-        }
         break;
       case ORDER_TYPE_SELL:
         _result = _indi[CURR].value[0] > 0 && _indi[CURR].value[0] > _level;
-        if (_method != 0) {
-          if (METHOD(_method, 0)) _result &= _indi[CURR].value[0] < _indi[PREV].value[0];
-          if (METHOD(_method, 1)) _result &= _indi[PREV].value[0] < _indi[PPREV].value[0];
-          if (METHOD(_method, 2)) _result &= _indi[PREV].value[0] > _level;
-          if (METHOD(_method, 3)) _result &= _indi[PPREV].value[0] > _level;
-          if (METHOD(_method, 4)) _result &= _indi[PREV].value[0] - _indi[CURR].value[0] > _indi[PPREV].value[0] - _indi[PREV].value[0];
-          if (METHOD(_method, 5)) _result &= _indi[PPREV].value[0] < 0;
-        }
         break;
     }
     return _result;

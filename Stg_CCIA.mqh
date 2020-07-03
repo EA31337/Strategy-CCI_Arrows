@@ -10,7 +10,7 @@
  */
 
 // Includes.
-#include <EA31337-classes/Indicators/Indi_CCI.mqh>
+#include "Indi_CCIA.mqh"
 #include <EA31337-classes/Strategy.mqh>
 
 // User input params.

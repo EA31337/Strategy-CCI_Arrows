@@ -18,4 +18,4 @@ struct Stg_CCI_Arrows_EURUSD_H1_Params : Stg_CCI_Arrows_Params {
     CCI_Arrows_PriceLimitLevel = 2;
     CCI_Arrows_MaxSpread = 6;
   }
-} stg_cci_h1;
+} stg_cci_arrays_h1;

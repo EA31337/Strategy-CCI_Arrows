@@ -9,12 +9,12 @@
  * Strategy based on the Commodity Channel Index Arrows indicator (CCI Arrows).
  */
 
-// Includes EA31337 framework.
+// Includes.
 #include <EA31337-classes/EA.mqh>
-#include <EA31337-classes/Indicators/Indi_CCI.mqh>
+#include "Indi_CCI_Arrows.mqh"
 
 // Inputs.
-input int Active_Tfs = 127;               // Activated timeframes (1-255) [M1=1,M5=2,M15=4,M30=8,H1=16,H2=32,H4=64...]
+input int Active_Tfs = 16;                // Activated timeframes (1-255) [M1=1,M5=2,M15=4,M30=8,H1=16,H2=32,H4=64...]
 input ENUM_LOG_LEVEL Log_Level = V_INFO;  // Log level.
 input bool Info_On_Chart = true;          // Display info on chart.
 

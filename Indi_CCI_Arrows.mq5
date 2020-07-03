@@ -54,7 +54,6 @@ int OnCalculate(const int rates_total, const int prev_calculated, const datetime
   ArraySetAsSeries(Low, true);
 
   double CCIBuffer[];
-  // Or make the dynamic call?
   int myCCI = ::iCCI(NULL, 0, CCI_Period, CCI_Applied_Price);
   CopyBuffer(myCCI, 0, 0, rates_total, CCIBuffer);
 

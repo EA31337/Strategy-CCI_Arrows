@@ -7,15 +7,15 @@
 // Defines strategy's parameter values for the given pair symbol and timeframe.
 struct Stg_CCI_Arrows_EURUSD_M5_Params : Stg_CCI_Arrows_Params {
   Stg_CCI_Arrows_EURUSD_M5_Params() {
-    CCI_Arrows_Period = 12;
-    CCI_Arrows_Applied_Price = 3;
+    CCI_Arrows_Period = 21;
+    CCI_Arrows_Applied_Price = PRICE_CLOSE;
     CCI_Arrows_Shift = 0;
-    CCI_Arrows_SignalOpenMethod = -61;
-    CCI_Arrows_SignalOpenLevel = 36;
-    CCI_Arrows_SignalCloseMethod = 1;
-    CCI_Arrows_SignalCloseLevel = 36;
+    CCI_Arrows_SignalOpenMethod = 0;
+    CCI_Arrows_SignalOpenLevel = 0;
+    CCI_Arrows_SignalCloseMethod = 0;
+    CCI_Arrows_SignalCloseLevel = 0;
     CCI_Arrows_PriceLimitMethod = 0;
-    CCI_Arrows_PriceLimitLevel = 2;
+    CCI_Arrows_PriceLimitLevel = 0;
     CCI_Arrows_MaxSpread = 3;
   }
-} stg_cci_m5;
+} stg_cci_arrays_m5;

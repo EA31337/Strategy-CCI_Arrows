@@ -13,7 +13,7 @@
 #include <EA31337-classes/Strategy.mqh>
 
 // User input params.
-INPUT string __CCI_Arrows_Parameters__ = "-- CCI strategy params --";  // >>> CCI <<<
+INPUT string __CCI_Arrows_Parameters__ = "-- CCI Arrows strategy params --";  // >>> CCI Arrows <<<
 INPUT int CCI_Arrows_Shift = 1;                                        // Shift (0 for default)
 INPUT int CCI_Arrows_Period = 58;                                      // Period
 INPUT ENUM_APPLIED_PRICE CCI_Arrows_Applied_Price = 2;                 // Applied Price

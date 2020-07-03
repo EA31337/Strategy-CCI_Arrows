@@ -26,6 +26,7 @@ double dUpCCIBuffer[];
 double dDownCCIBuffer[];
 
 input int CCI_Period = 21;
+input ENUM_APPLIED_PRICE CCI_Applied_Price = PRICE_CLOSE;
 
 //+------------------------------------------------------------------+
 //| Custom indicator initialization function                         |
@@ -54,7 +55,7 @@ int OnCalculate(const int rates_total, const int prev_calculated, const datetime
 
   double CCIBuffer[];
   // Or make the dynamic call?
-  int myCCI = ::iCCI(NULL, 0, CCI_Period, PRICE_CLOSE);
+  int myCCI = ::iCCI(NULL, 0, CCI_Period, CCI_Applied_Price);
   CopyBuffer(myCCI, 0, 0, rates_total, CCIBuffer);
 
   for (int i = rates_total; i > 1; i--) {

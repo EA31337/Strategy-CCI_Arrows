@@ -82,7 +82,7 @@ class Stg_CCI_Arrows : public Strategy {
                                   _params.CCI_Arrows_Shift);
     ccia_params.SetTf(_tf);
     StgParams sparams(new Trade(_tf, _Symbol), new Indi_CCI_Arrows(ccia_params), NULL, NULL);
-    sparams.logger.SetLevel(_log_level);
+    sparams.logger.Ptr().SetLevel(_log_level);
     sparams.SetMagicNo(_magic_no);
     sparams.SetSignals(_params.CCI_Arrows_SignalOpenMethod, _params.CCI_Arrows_SignalOpenLevel,
                        _params.CCI_Arrows_SignalOpenFilterMethod, _params.CCI_Arrows_SignalOpenBoostMethod,

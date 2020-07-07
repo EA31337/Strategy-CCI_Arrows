@@ -104,7 +104,7 @@ class Stg_CCI_Arrows : public Strategy {
    *   _level (double) - signal level to consider the signal
    */
   bool SignalOpen(ENUM_ORDER_TYPE _cmd, int _method = 0, double _level = 0.0) {
-    Chart *_chart = Chart();
+    Chart *_chart = this.Chart();
     Indi_CCI_Arrows *_indi = Data();
     bool _is_valid = _indi[CURR].IsValid() && _indi[PREV].IsValid() && _indi[PPREV].IsValid();
     bool _result = _is_valid;

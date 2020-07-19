@@ -16,6 +16,7 @@ struct Stg_CCI_Arrows_EURUSD_M30_Params : Stg_CCI_Arrows_Params {
     CCI_Arrows_SignalCloseLevel = 0;
     CCI_Arrows_PriceLimitMethod = 0;
     CCI_Arrows_PriceLimitLevel = 0;
+    CCI_Arrows_TickFilterMethod = 0;
     CCI_Arrows_MaxSpread = 5;
   }
 } stg_cci_arrays_m30;

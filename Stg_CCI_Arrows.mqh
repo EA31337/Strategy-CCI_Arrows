@@ -14,18 +14,19 @@
 
 // User input params.
 INPUT string __CCI_Arrows_Parameters__ = "-- CCI Arrows strategy params --";  // >>> CCI Arrows <<<
-INPUT int CCI_Arrows_Period = 0;                                              // Period
+INPUT int CCI_Arrows_Period = 21;                                             // Period
 INPUT ENUM_APPLIED_PRICE CCI_Arrows_Applied_Price = PRICE_CLOSE;              // Applied Price
 INPUT int CCI_Arrows_Shift = 0;                                               // Shift (0 for default)
-int CCI_Arrows_SignalOpenMethod = 0;                                    // Signal open method (-63-63)
-double CCI_Arrows_SignalOpenLevel = 0;                                  // Signal open level (-49-49)
-int CCI_Arrows_SignalOpenFilterMethod = 0;                              // Signal open filter method
-int CCI_Arrows_SignalOpenBoostMethod = 0;                               // Signal open boost method
-int CCI_Arrows_SignalCloseMethod = 0;                                   // Signal close method
-double CCI_Arrows_SignalCloseLevel = 18;                                // Signal close level
-int CCI_Arrows_PriceLimitMethod = 0;                                    // Price limit method
-double CCI_Arrows_PriceLimitLevel = 1;                                  // Price limit level
-double CCI_Arrows_MaxSpread = 6.0;                                            // Max spread to trade (pips)
+INPUT int CCI_Arrows_SignalOpenMethod = 0;                                    // Signal open method (-63-63)
+INPUT double CCI_Arrows_SignalOpenLevel = 0;                                  // Signal open level (-49-49)
+INPUT int CCI_Arrows_SignalOpenFilterMethod = 0;                              // Signal open filter method
+INPUT int CCI_Arrows_SignalOpenBoostMethod = 0;                               // Signal open boost method
+INPUT int CCI_Arrows_SignalCloseMethod = 0;                                   // Signal close method
+INPUT double CCI_Arrows_SignalCloseLevel = 0;                                 // Signal close level
+INPUT int CCI_Arrows_PriceLimitMethod = 0;                                    // Price limit method
+INPUT double CCI_Arrows_PriceLimitLevel = 0;                                  // Price limit level
+INPUT int CCI_Arrows_TickFilterMethod = 0;                                    // Tick filter method.
+INPUT double CCI_Arrows_MaxSpread = 6.0;                                      // Max spread to trade (pips)
 
 // Struct to define strategy parameters to override.
 struct Stg_CCI_Arrows_Params : StgParams {
@@ -40,6 +41,7 @@ struct Stg_CCI_Arrows_Params : StgParams {
   double CCI_Arrows_SignalCloseLevel;
   int CCI_Arrows_PriceLimitMethod;
   double CCI_Arrows_PriceLimitLevel;
+  int CCI_Arrows_TickFilterMethod;
   double CCI_Arrows_MaxSpread;
 
   // Constructor: Set default param values.
@@ -55,6 +57,7 @@ struct Stg_CCI_Arrows_Params : StgParams {
         CCI_Arrows_SignalCloseLevel(::CCI_Arrows_SignalCloseLevel),
         CCI_Arrows_PriceLimitMethod(::CCI_Arrows_PriceLimitMethod),
         CCI_Arrows_PriceLimitLevel(::CCI_Arrows_PriceLimitLevel),
+        CCI_Arrows_TickFilterMethod(::CCI_Arrows_TickFilterMethod),
         CCI_Arrows_MaxSpread(::CCI_Arrows_MaxSpread) {}
 };
 
@@ -88,6 +91,7 @@ class Stg_CCI_Arrows : public Strategy {
                        _params.CCI_Arrows_SignalOpenFilterMethod, _params.CCI_Arrows_SignalOpenBoostMethod,
                        _params.CCI_Arrows_SignalCloseMethod, _params.CCI_Arrows_SignalCloseLevel);
     sparams.SetPriceLimits(_params.CCI_Arrows_PriceLimitMethod, _params.CCI_Arrows_PriceLimitLevel);
+    sparams.SetTickFilter(_params.CCI_Arrows_TickFilterMethod);
     sparams.SetMaxSpread(_params.CCI_Arrows_MaxSpread);
     // Initialize strategy instance.
     Strategy *_strat = new Stg_CCI_Arrows(sparams, "CCI Arrows");
@@ -173,7 +177,7 @@ class Stg_CCI_Arrows : public Strategy {
     double _default_value = Market().GetCloseOffer(_cmd) + _trail * _method * _direction;
     double _result = _default_value;
     switch (_method) {
-      case 0: {
+      case 1: {
         int _bar_count = (int)_level * (int)_indi.GetPeriod();
         _result = _direction > 0 ? _indi.GetPrice(PRICE_HIGH, _indi.GetHighest(_bar_count))
                                  : _indi.GetPrice(PRICE_LOW, _indi.GetLowest(_bar_count));

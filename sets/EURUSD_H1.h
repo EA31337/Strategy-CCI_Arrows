@@ -11,11 +11,12 @@ struct Stg_CCI_Arrows_EURUSD_H1_Params : Stg_CCI_Arrows_Params {
     CCI_Arrows_Applied_Price = 3;
     CCI_Arrows_Shift = 0;
     CCI_Arrows_SignalOpenMethod = 0;
-    CCI_Arrows_SignalOpenLevel = 36;
-    CCI_Arrows_SignalCloseMethod = 1;
-    CCI_Arrows_SignalCloseLevel = 36;
+    CCI_Arrows_SignalOpenLevel = 0;
+    CCI_Arrows_SignalCloseMethod = 0;
+    CCI_Arrows_SignalCloseLevel = 0;
     CCI_Arrows_PriceLimitMethod = 0;
-    CCI_Arrows_PriceLimitLevel = 2;
+    CCI_Arrows_PriceLimitLevel = 0;
+    CCI_Arrows_TickFilterMethod = 0;
     CCI_Arrows_MaxSpread = 6;
   }
 } stg_cci_arrays_h1;
